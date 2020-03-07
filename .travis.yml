@@ -34,7 +34,16 @@ jobs:
   include:
     - stage: validate
       script:
-        - pdk validate --parallel manifests/
+        - pdk validate --puppet-version=3.7.4 --parallel manifests/
+    - stage: validate
+      script:
+        - pdk validate --puppet-version=4.10.12 --parallel manifests/
+    - stage: validate
+      script:
+        - pdk validate --puppet-version=5.5.18 --parallel manifests/
+    - stage: validate
+      script:
+        - pdk validate --puppet-version=6.13.0 --parallel manifests/            
     -
       env: CHECK="check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint"
       stage: static
