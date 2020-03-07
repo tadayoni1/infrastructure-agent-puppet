@@ -12,6 +12,10 @@ before_install:
   - '[ -z "$RUBYGEMS_VERSION" ] || (yes || true) | gem update --system $RUBYGEMS_VERSION'
   - gem --version
   - bundle -v
+install:
+  - wget 'https://pm.puppetlabs.com/cgi-bin/pdk_download.cgi?dist=ubuntu&rel=16.04&arch=amd64&ver=latest' -q -O pdk.deb && sudo dpkg -i pdk.deb && rm pdk.deb
+  - gem install r10k
+  - r10k puppetfile install -v  
 script:
   - 'bundle exec rake $CHECK'
 bundler_args: --without system_tests
@@ -19,6 +23,7 @@ rvm:
   - 2.4.5
   - 2.5.7
 stages:
+  - validate  
   - static
   - spec
   - acceptance
@@ -28,13 +33,13 @@ stages:
 jobs:
   fast_finish: true
   include:
+    - stage: validate
+      script:
+        - pdk validate metadata
+        - pdk validate puppet site/ manifests/
     -
       env: CHECK="check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint"
       stage: static
-    -
-      env: PUPPET_GEM_VERSION="~> 3.0" CHECK=parallel_spec
-      rvm: 2.4.5
-      stage: spec
     -
       env: PUPPET_GEM_VERSION="~> 4.0" CHECK=parallel_spec
       rvm: 2.4.5
