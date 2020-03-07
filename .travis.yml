@@ -15,6 +15,7 @@ before_install:
 install:
   - wget 'https://pm.puppetlabs.com/cgi-bin/pdk_download.cgi?dist=ubuntu&rel=16.04&arch=amd64&ver=latest' -q -O pdk.deb && sudo dpkg -i pdk.deb && rm pdk.deb
   - gem install r10k
+  - bundle install  
 script:
   - 'bundle exec rake $CHECK'
 bundler_args: --without system_tests
