@@ -34,9 +34,6 @@ jobs:
   include:
     - stage: validate
       script:
-        - pdk validate --puppet-version=3.7.4 --parallel manifests/
-    - stage: validate
-      script:
         - pdk validate --puppet-version=4.10.12 --parallel manifests/
     - stage: validate
       script:
