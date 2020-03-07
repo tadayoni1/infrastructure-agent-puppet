@@ -43,7 +43,7 @@ jobs:
       stage: deploy
 branches:
   only:
-    - master
-    - /^v\d/
+  - gh-pages
+  - /.*/
 notifications:
   email: false
