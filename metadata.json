@@ -3,7 +3,7 @@
     "version": "0.10.0",
     "author": "Abir Majumdar",
     "summary": "A Puppet module for installing New Relic Infrastructure Agent",
-    "license": "https://github.com/maju6406/infrastructure-agent-puppet/LICENSE.md",
+    "license": "Apache-2.0",
     "source": "https://github.com/maju6406/infrastructure-agent-puppet",
     "project_page": "https://github.com/maju6406/infrastructure-agent-puppet",
     "issues_url": "https://github.com/maju6406/infrastructure-agent-puppet/issues",
