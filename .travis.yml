@@ -16,6 +16,8 @@ script:
   - 'bundle exec rake $CHECK'
 bundler_args: --without system_tests
 rvm:
+  - 1.9.3
+  - 2.4.5
   - 2.5.7
 stages:
   - static
@@ -30,6 +32,14 @@ jobs:
     -
       env: CHECK="check:symlinks check:git_ignore check:dot_underscore check:test_file rubocop syntax lint metadata_lint"
       stage: static
+    -
+      env: PUPPET_GEM_VERSION="~> 3.0" CHECK=parallel_spec
+      rvm: 1.9.3
+      stage: spec
+    -
+      env: PUPPET_GEM_VERSION="~> 4.0" CHECK=parallel_spec
+      rvm: 2.4.5
+      stage: spec
     -
       env: PUPPET_GEM_VERSION="~> 5.0" CHECK=parallel_spec
       rvm: 2.4.5
