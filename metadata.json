@@ -1,7 +1,7 @@
 {
     "name": "beersy-newrelic_infra",
     "version": "0.10.0",
-    "author": "New Relic, Inc.",
+    "author": "Abir Majumdar",
     "summary": "A Puppet module for installing New Relic Infrastructure Agent",
     "license": "https://github.com/maju6406/infrastructure-agent-puppet/LICENSE.md",
     "source": "https://github.com/maju6406/infrastructure-agent-puppet",
