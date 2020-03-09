@@ -98,17 +98,9 @@ class newrelic_infra::agent (
           case $::operatingsystem {
             'Debian', 'Ubuntu': {
               ensure_packages('apt-transport-https')
-              apt::source { 'newrelic_infra-agent':
-                ensure       => $package_repo_ensure,
-                location     => 'https://download.newrelic.com/infrastructure_agent/linux/apt',
-                release      => $::lsbdistcodename,
-                repos        => 'main',
-                architecture => 'amd64',
-                key          => {
-                    'id'     => 'A758B3FBCD43BE8D123A3476BB29EE038ECCE87C',
-                    'source' => 'https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg',
-                },
-                require      => Package['apt-transport-https'],
+              exec { 'newrelic_infra-agent':
+                command => 'curl -s https://download.newrelic.com/infrastructure_agent/gpg/newrelic-infra.gpg | sudo apt-key add - && printf "deb [arch=amd64] https://download.newrelic.com/infrastructure_agent/linux/apt trusty main" | sudo tee -a /etc/apt/sources.list.d/newrelic-infra.list',
+                require => Package['apt-transport-https'],
               }
               # work around necessary to get Puppet and Apt to get along on first run, per ticket open as of this writing
               # https://tickets.puppetlabs.com/browse/MODULES-2190?focusedCommentId=341801&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-341801
@@ -116,7 +108,7 @@ class newrelic_infra::agent (
                 command     => 'apt-get update',
                 cwd         => '/tmp',
                 path        => ['/usr/bin'],
-                subscribe   => Apt::Source['newrelic_infra-agent'],
+                subscribe   => Exec['newrelic_infra-agent'],
                 refreshonly => true,
               }
               package { 'newrelic-infra':
